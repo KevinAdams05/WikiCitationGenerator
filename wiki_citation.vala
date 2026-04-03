@@ -31,6 +31,32 @@ public class WikiCitationWindow : Gtk.ApplicationWindow {
     public WikiCitationWindow (Gtk.Application app) {
         Object (application: app, title: "Wiki Citation Generator", default_width: 750, default_height: 420);
 
+        // Header bar with menu
+        var header = new Gtk.HeaderBar ();
+        this.titlebar = header;
+
+        var menu = new GLib.Menu ();
+        menu.append ("About", "win.about");
+
+        var menu_button = new Gtk.MenuButton ();
+        menu_button.icon_name = "open-menu-symbolic";
+        menu_button.menu_model = menu;
+        header.pack_end (menu_button);
+
+        var about_action = new GLib.SimpleAction ("about", null);
+        about_action.activate.connect (() => {
+            var about = new Gtk.AboutDialog ();
+            about.transient_for = this;
+            about.modal = true;
+            about.program_name = "Wiki Citation Generator";
+            about.version = "0.0.4";
+            about.comments = "Generates Wikipedia citation markup for web sources.";
+            about.authors = { "Kevin Adams" };
+            about.license_type = Gtk.License.MIT_X11;
+            about.present ();
+        });
+        this.add_action (about_action);
+
         var grid = new Gtk.Grid ();
         grid.row_spacing = 8;
         grid.column_spacing = 12;

@@ -6,7 +6,7 @@ all: $(TARGET)
 
 $(TARGET): $(SRC)
 	mkdir -p $(OUTPUT_DIR)
-	valac $(SRC) -o $(TARGET)
+	valac --pkg gtk4 $(SRC) -o $(TARGET)
 
 clean:
 	rm -rf $(OUTPUT_DIR)
